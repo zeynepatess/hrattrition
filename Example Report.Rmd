@@ -1,0 +1,56 @@
+---
+title: "Report on Employee Attrition"
+author: "Greg Sward"
+date: "1 October 2017"
+output:
+  html_document:
+    theme: flatly
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, }
+employee_data <- readRDS("data/employee_data.rds")
+```
+
+
+## HR Data Analysis
+This report on HR data analysis was conducted on etc etc...
+
+
+## Key Findings
+
+The most important factors for whether an employee stayed or left were:
+
+* Overtime pay
+* Stock option compensation
+
+
+```{r echo=FALSE, warning=FALSE, message=FALSE, fig.height = 3, fig.width = 4}
+library(ggplot2)
+library(ggthemes)
+library(plotly)
+p1 <- ggplot(data = employee_data) +
+  geom_bar(aes(x = OverTime, fill = Attrition), position="fill") +
+  ggtitle("Percentage Attrition by OverTime") +
+  scale_fill_colorblind()
+ggplotly(p1)
+
+p2 <- ggplot(data = employee_data) +
+  geom_bar(aes(x = StockOptionLevel, fill = Attrition), position="fill") +
+  ggtitle("Percentage Attrition by Stock Option Level") +
+  theme(axis.title.y = element_blank()) +
+  scale_fill_colorblind()
+ggplotly(p2)
+```
+
+
+##Employee Data
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(DT)
+datatable(employee_data)
+
